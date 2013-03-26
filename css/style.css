@@ -1,0 +1,128 @@
+.wrapper_main_body{
+	border: 0px solid;
+	overflow: hidden;
+	
+}
+
+.wrapper_form_inputs{
+	border: 0px solid;
+	overflow: hidden;
+	margin: 0 auto;
+	width: 600px;
+}
+
+.wrapper_input_name{
+	border: 0px solid;
+	position: reletive;
+	float: left;
+	width: 160px;
+	margin-bottom: 10px;
+}
+
+.wrapper_input_text{
+	border: 0px solid;
+	position: reletive;
+	float: left;
+	margin: 0 auto;
+}
+
+.wrapper_input_submit{
+	border: 0px solid;
+	position: reletive;
+	width: 80px;
+	margin: 0 auto;
+}
+
+.wrapper_center{
+	width: 100%;
+	position: reletive;
+	float: left;
+	border: 0px solid;
+}
+
+
+.wrapper_informs_main{
+	border: 0px solid;
+	position: reletive;
+	float: left;
+	margin: 0 auto;
+	width: 100%;
+	margin-top: 10px;
+}
+
+.wrapper_informs{
+	border: 0px solid;
+	position: reletive;
+	margin: 0 auto;
+	width: 500px;
+}
+
+
+.head_message{
+	border: 1px solid;
+	width: 100%;
+
+}
+
+.text_message{
+	border: 1px solid;
+	width: 100%;
+}
+
+.foot_message{
+	border: 1px solid;
+	width: 100%;
+	margin-bottom: 20px;
+	overflow: hidden;
+}
+
+
+
+.foot_message_menu{
+	margin-right: 10px;
+	position: relative;
+	float: left;
+}
+
+
+
+.wrapper_message_action{
+	border: 1px solid;
+	position: reletive;
+	margin: 0 auto;
+	width: 500px;
+	text-align: center;
+}
+
+
+.select_page{
+	border: 0px solid;
+	width: 35px;
+	position: relative;
+	float: left;
+}
+
+
+/*		inputs		    */
+
+.input_name{
+	width: 100%;
+}
+
+.input_text_user{
+	width: 550px;
+	max-width: 560px;
+	height: 100px;
+	max-height: 120px;
+}
+
+.input_submit{
+	border: 1px solid;
+	width: 100%;
+	
+}
+
+
+
+
+
