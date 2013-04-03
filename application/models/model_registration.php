@@ -24,5 +24,14 @@
                 if($query) return true; else return false;
                               
             }
+            
+            
+            
+            public function checkUser($login){
+                $select = $this->_query("SELECT login, paswrd FROM $this->table2");
+                while($row = mysqli_fetch_assoc($select))
+                        if($login == $row['login']) return true; 
+                return false;        
+            }
                 
         }
