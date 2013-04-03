@@ -69,6 +69,9 @@
                     $this->redirect(0, "/guestbook/registration/index/error/2");
                 }
                 
+                if($this->model->checkUser($login))
+                    $this->redirect(0, "/guestbook/registration/index/error/3");
+                
                 
                 $result = $this->model->actionAddNewUser($login, md5(md5($paswrd)));
                 if($result){
@@ -80,7 +83,7 @@
                     $this->view->render($this->generatedContent);
                     $this->redirect(1, "/guestbook/");
                 }else
-                    $this->redirect(0, "/guestbook/registration/index/error/3");
+                    $this->redirect(0, "/guestbook/registration/index/error/4");
                     
             }
             
