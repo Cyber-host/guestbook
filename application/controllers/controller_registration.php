@@ -59,6 +59,7 @@
                 $paswrd     = trim($_POST['paswrd']);
                 $repaswrd   = trim($_POST['repaswrd']);
                 
+                $_POST = array();
                 
                 if(!isset($login) || empty($login) || !preg_match('/^[a-zA-Z][-_a-zA-Z0-9]{4,25}$/', $login)){
                     $this->redirect(0, "/guestbook/registration/index/error/1");
