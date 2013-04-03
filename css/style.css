@@ -123,6 +123,12 @@
 }
 
 
-
+.error_registration{
+    border: 1px solid #f40b0b;
+    color: #831212;
+    background-color: #FFC0CB;
+    width: 300px;
+    margin: 0 auto;
+}
 
 

@@ -9,15 +9,20 @@
 	*/
 	class Controller{
     
-	    public $model;
-	    public $view;
+	    public $model = null;
+	    public $view = null;
     
 	    function __construct(){
-		$this->view = new View();
+		//$this->view = new View();
 	    }
     
-	    function actionIndex(){
+	    public function actionIndex(){
 	    }
+            
+            public function redirect($time, $url){
+                header('Refresh: '.$time.'; URL='.$url);
+                exit;
+            }
 	}
 ?>
 

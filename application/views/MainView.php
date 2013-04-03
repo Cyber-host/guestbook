@@ -1,4 +1,8 @@
 <div class="wrapper_main_body">
+    <div>
+        <div><a href="/guestbook/registration">Registration</a></div>
+        <div><a href="/guestbook/authorization">Authorization</a></div>
+    </div>
 	<div class="wrapper_form_inputs">
 		<form action="/guestbook/main/add" method="POST">
 			<div class="wrapper_input_name"><input class="input_name" type="text" name="name_user" value="name..."></div>
@@ -8,26 +12,11 @@
 			</div>
 		</form>
 			<div class="wrapper_informs_main"> 
-				<div class="wrapper_informs">
-					<?php
-						foreach($pData as $key => $value){ ?>
-							<div class="head_message"><?php echo $value['name']; ?></div>
-							<div class="text_message"><?php echo $value['short_text']; ?></div>
-							<div class="foot_message">
-								<div class="foot_message_menu"><a href="/guestbook/main/readmore/<?php echo $value['id']; ?>">Read more...</a></div>
-								<div class="foot_message_menu"><a href="/guestbook/main/edit/<?php echo $value['id']; ?>">Edit</a></div>
-								<div class="foot_message_menu"><a href="/guestbook/main/delete/<?php echo $value['id']; ?>">Delete</a></div>
-								<div class="foot_message_menu">date post: <?php echo $value['datecreate']; ?></div>
-							</div>
-						<?php  }
-				
-					?>
-				</div>
-				
+                                {ALL_POSTS}	
 				<form>
 					<div class="select_page">
 						<select id="pages" name="pages">
-						<?php echo "!!!";
+						<?php 
 							$currentPage	=	explode('/', $_SERVER['REQUEST_URI']);
 							$other = $other / 10;
 							for($i=0; $i<$other; $i++){ ?>

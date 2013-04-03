@@ -19,7 +19,7 @@
                         $routes = Route::_getActions($_SERVER['REQUEST_URI']);
                         
                         if(!empty($routes['params']))
-                            $routes['controller']->$routes['action']($routes['params'][0]);
+                            $routes['controller']->$routes['action']($routes['params']);
                         else
                             $routes['controller']->$routes['action']();
                         

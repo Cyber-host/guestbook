@@ -9,8 +9,10 @@
 	* @version 1.0
 	*/
 	class ControllerMain extends Controller{
-	
-                private $buffer     = null;
+            
+            
+                private $generatedContent = null;
+            
 	
 		/**
 		* Конструктор __construct iнцiалiзуе обект view
@@ -27,18 +29,27 @@
 		* 
 		* @param int $page сторiнка для вiдображення постiв по 10 шт
 		*/
-		function actionIndex($page=1){	
+		public function actionIndex($page=1){	
                         $this->model = new ModelMain();
+                        
 			$posts = 0;
 			if($page != 1) $posts = ($page-1) * 10;
 			
 			$numberElementsTable =  $this->model->getNumberElements();
 	
-			$data = $this->model->getData($posts);
+			$data = $this->model->getAllInf($posts);
 			arsort($data);
 			$title	=	"Guestbook";
-			$this->view->generate('MainView.php', 'layout.php', $data, $title, $numberElementsTable);
+                        
+                        
+                        
+			$this->generatedContent = $this->view->generate('MainView.php', 'layout.php', $title, $numberElementsTable);
+                        $contRepl = $this->view->generateMultiCont("application/views/AllPostView.php", $data);
+                        $this->generatedContent = $this->view->replace($this->generatedContent, '{ALL_POSTS}',$contRepl);
+                        $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
+                        $this->view->render($this->generatedContent);
 		}
+                
                 
                 
                 
@@ -58,16 +69,21 @@
 				unset($_POST['name_user']);
 				unset($_POST['text_user']);
 				
-				if($this->model->addPost($namePost, $textUser, $textShortUser)) $data = "Entry is added to the database!"; else $data = "Entry is not added to the database!";
+				if($this->model->addInf($namePost, $textUser, $textShortUser, 'NOW()')) $data = "Entry is added to the database!"; else $data = "Entry is not added to the database!";
 			}else{
 				$data = "Entry is not added to the database!";
 			}
 			
 			$title	=	"Guestbook - add post";
-			
-			$this->view->generate('AddView.php', 'layout.php', $data, $title);
+                        $this->generatedContent = $this->view->generate('AddView.php', 'layout.php');
+                        $this->generatedContent = $this->view->replace($this->generatedContent, '{DATA}', $data);
+                        $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
+                        $this->view->render($this->generatedContent);
+                        $this->redirect(1, '/guestbook/');
                         
-                        header('Refresh: 1; URL=/guestbook/');
+                        
+                        
+                        
 		}
                 
                 
@@ -76,11 +92,14 @@
 		* 
 		* @param int $pGets id поста для виведення
 		*/
-		public function actionReadmore($pGets){
+		public function actionReadmore(array $pGets){
                     $this->model = new ModelMain();
-                    $data = $this->model->getDataReadmore($pGets);
+                    $data = $this->model->getAboutIdInf($pGets[0]);
                     $title	=	"Guestbook - read more";
-                    $this->view->generate('ReadmoreView.php', 'layout.php', $data, $title);
+                    $this->generatedContent = $this->view->generate('ReadmoreView.php', 'layout.php');
+                    $this->generatedContent = $this->view->generateCont($this->generatedContent, $data);
+                    $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
+                    $this->view->render($this->generatedContent);
 		}
                 
                 
@@ -91,13 +110,16 @@
 		* 
 		* @param int $pGets id поста для редагування
 		*/
-		function actionEdit($pGets){
+		public function actionEdit(array $pGets){
                     $this->model = new ModelMain();
-                    $data = $this->model->getDataEdit($pGets);
+                    $data = $this->model->getAboutIdInf($pGets[0]);
 
                     $title	=	"Guestbook - edit";
 
-                    $this->view->generate('EditView.php', 'layout.php', $data, $title);
+                    $this->generatedContent = $this->view->generate('EditView.php', 'layout.php');
+                    $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
+                    $this->generatedContent = $this->view->generateCont($this->generatedContent, $data);
+                    $this->view->render($this->generatedContent);
                     
 		}
                 
@@ -106,23 +128,25 @@
 		* Метод actionEditwrite генерування сторинки для запису змiни в базу
 		* 
 		*/
-		function actionEditwrite(){
+		public function actionEditwrite(){
 			$this->model = new ModelMain();
 			if(!empty($_POST['id']))			$id = $_POST['id'];
 			if(!empty($_POST['name_user']))		$name = $_POST['name_user'];
 			if(!empty($_POST['text_user']))		$text = $_POST['text_user'];
 		
-			$data = $this->model->updateDataEdit($id, $name, $text);
+			$data = $this->model->updateDataAboutId($id, $name, $text);
 			$title	=	"Guestbook - edit";
 			
 			if($data)
-				$data = "Update successful!";
+				$data = array(array("Update successful!", '{DATA}'));
 			else
-				$data = "Update is not successful!";
+				$data = array(array("Update is not successful!", '{DATA}'));
 
-			$this->view->generate('EditRewriteView.php', 'layout.php', $data, $title);
-                        
-                        header('Refresh: 1; URL=/guestbook/');
+			$this->generatedContent = $this->view->generate('EditRewriteView.php', 'layout.php');
+                        $this->generatedContent = $this->view->generateCont($this->generatedContent, $data);
+                        $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
+                        $this->view->render($this->generatedContent);
+                        $this->redirect(1, '/guestbook/');
 		}
                 
                 
@@ -132,18 +156,22 @@
 		* 
 		* @param int $pGets id поста для видалення
 		*/
-		public function actionDelete($pGets){
+		public function actionDelete(array $pGets){
                     $this->model = new ModelMain();
-                    $data = $this->model->deleteData($pGets);
+                    $data = $this->model->deleteData($pGets[0]);
 
                     if($data)
-                            $data = "Entry is delete from database!";
+                            $data = array(array("Entry is delete from database!", '{DATA}'));
                     else
-                            $data = "Entry is not delete from database!";
+                            $data = array(array("Entry is not delete from database!", '{DATA}'));
 
                     $title	=	"Guestbook - delete";
-                    $this->view->generate('DeleteView.php', 'layout.php', $data, $title);
-                    header('Refresh: 1; URL=/guestbook/');
+                    
+                    $this->generatedContent = $this->view->generate('DeleteView.php', 'layout.php');
+                    $this->generatedContent = $this->view->generateCont($this->generatedContent, $data);
+                    $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
+                    $this->view->render($this->generatedContent);
+                    $this->redirect(1, '/guestbook/');
 		}
                 
                 
@@ -157,8 +185,11 @@
 		* Метод action404 генерування сторинки 404
 		* 
 		*/
-		function action404(){
-			$this->view->generate('404View.php', 'layout.php', null, "404");
+		public function action404(){
+			$this->generatedContent = $this->view->generate('404View.php', 'layout.php', null);
+                        $title = "404";
+                        $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
+                        $this->view->render($this->generatedContent);
 		}
                 
                 

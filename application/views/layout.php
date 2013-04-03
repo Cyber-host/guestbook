@@ -5,9 +5,9 @@
 		<script src="/guestbook/js/jquery.js"></script>
 		<script src="/guestbook/js/main.js"></script>
 		<link rel="stylesheet" type="text/css" href="/guestbook/css/style.css" />
-		<title><?php echo $title; ?></title>
+		<title>{TITLE}</title>
 	</head>
 	<body>
-		<?php include 'application/views/'.$pContentView; ?>
+            {CONTENT}
 	</body>
 </html>
