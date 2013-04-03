@@ -3,7 +3,7 @@
     class Errors{
         
             public static $ERRORS  =   array(
-                "registration" => array("O_o", "Bad login reg!", "Bad password reg!", "Bad connect reg!"),
+                "registration" => array("O_o", "Bad login reg!", "Bad password reg!", "This username already exists!","Bad connect reg!"),
                 "authorization" => array("o_O", "Bad login auth!", "Bad password auth!", "Bad connect reg!", "BAD LOGIN OR PASSWORD!!!!"),
                 "other" => array("O_o o_O O_O o_o")
             );
