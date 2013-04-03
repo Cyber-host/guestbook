@@ -60,17 +60,17 @@
                 $repaswrd   = trim($_POST['repaswrd']);
                 
                 
-                if(!isset($login) || empty($login)){
+                if(!isset($login) || empty($login) || !preg_match('/^[a-zA-Z][-_a-zA-Z0-9]{4,25}$/', $login)){
                     $this->redirect(0, "/guestbook/registration/index/error/1");
-                    
                 }
+
                 
-                if(!isset($paswrd) || empty($paswrd) || $paswrd != $repaswrd){
+                if(!isset($paswrd) || empty($paswrd) || $paswrd != $repaswrd || !preg_match('/^[a-zA-Z0-9-_]{6,25}$/', $paswrd)){
                     $this->redirect(0, "/guestbook/registration/index/error/2");
                 }
                 
                 
-                $result = $this->model->actionAddNewUser($login, $paswrd);
+                $result = $this->model->actionAddNewUser($login, md5(md5($paswrd)));
                 if($result){
                     $title = "Guestbook - Registration";
                     $data = "Registration is successful!";
@@ -81,7 +81,7 @@
                     $this->redirect(1, "/guestbook/");
                 }else
                     $this->redirect(0, "/guestbook/registration/index/error/3");
-
+                    
             }
             
         }
