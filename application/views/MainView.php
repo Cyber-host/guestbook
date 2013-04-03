@@ -1,7 +1,11 @@
 <div class="wrapper_main_body">
     <div>
+        <?php if(!isset($_SESSION['authorization'])){ ?>
         <div><a href="/guestbook/registration">Registration</a></div>
         <div><a href="/guestbook/authorization">Authorization</a></div>
+        <?php }else{ ?>
+        <div><a href="/guestbook/authorization/exit">Exit <?php echo $_SESSION['name_user']; ?></a></div>
+        <?php }; ?>
     </div>
 	<div class="wrapper_form_inputs">
 		<form action="/guestbook/main/add" method="POST">

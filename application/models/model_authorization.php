@@ -22,8 +22,9 @@
             
             public function checkUser($login, $paswrd){
                 $select = $this->_query("SELECT id, login, paswrd FROM $this->table2");
-                while($row = mysqli_fetch_assoc($select))
-                        if($login == $row['login'] && $paswrd == $row['paswrd']) return array(true, $row['id']); 
+                while($row = mysqli_fetch_assoc($select)){
+                        if($login == $row['login'] && md5(md5($paswrd)) == $row['paswrd']) return array(true, $row['id'], $row['login']);   
+                }
                 return array(false);        
             }
 

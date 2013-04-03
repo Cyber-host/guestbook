@@ -63,13 +63,26 @@
                 
                 $resultCheckUser = $this->model->checkUser($login, $paswrd);
                 
-                if($resultCheckUser[0] && !isset($_SESSION)){
+                if($resultCheckUser[0]){
                     $_SESSION['authorization'] = true; 
                     $_SESSION['id_user'] = $resultCheckUser[1]; 
-                }
-                else 
+                    $_SESSION['name_user'] = $resultCheckUser[2];
+                    $this->redirect(0, "/guestbook/");
+                }else 
                     $this->redirect(0, "/guestbook/authorization/index/error/4");                
                 
+            }
+            
+            
+            /**
+            * Метод actionExit
+            * 
+            * @param array
+            */
+            public function actionExit(){
+                $_SESSION = array();
+                session_destroy();
+                $this->redirect(0, "/guestbook/");
             }
             
         }
