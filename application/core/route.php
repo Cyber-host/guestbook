@@ -22,12 +22,18 @@
                             $routes['controller']->$routes['action']($routes['params']);
                         else
                             $routes['controller']->$routes['action']();
-                        
 		}
                 
                 
                 
                 
+                
+                /**
+                 * Метод _getActions опридилення маршрутизации
+                 * 
+                 * @param string $pUrl
+                 * @return string
+                 */
                 private function _getActions($pUrl){
                    
                     $actions            = array(); 
@@ -79,6 +85,15 @@
                 
                 
                 
+                
+                
+                
+                /**
+                 * метод error генерация маршруту помилки
+                 * 
+                 * @param boolean $pIncl
+                 * @return array
+                 */
                 private function error($pIncl){
                     if(!$pIncl){
                         $controllerError    = "application/controllers/controller_main.php";
