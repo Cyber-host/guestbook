@@ -20,6 +20,7 @@
 		*/
 		function __construct(){
 			$this->view = new View();
+                        $this->model = new ModelMain();
 		}
 		
 		
@@ -30,8 +31,6 @@
 		* @param int $page сторiнка для вiдображення постiв по 10 шт
 		*/
 		public function actionIndex($page=1){	
-                        $this->model = new ModelMain();
-                        
 			$posts = 0;
 			if($page != 1) $posts = ($page-1) * 10;
 			
@@ -43,7 +42,7 @@
                         
                         
                         
-			$this->generatedContent = $this->view->generate('MainView.php', 'layout.php', $title, $numberElementsTable);
+			$this->generatedContent = $this->view->generate('MainView.php', 'layout.php');
                         $contRepl = $this->view->generateMultiCont("application/views/AllPostView.php", $data);
                         $this->generatedContent = $this->view->replace($this->generatedContent, '{ALL_POSTS}',$contRepl);
                         $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
@@ -58,7 +57,6 @@
 		* 
 		*/
 		public function actionAdd(){
-			$this->model = new ModelMain();
 			$namePost	=	"";
 
 			if(!empty($_POST['name_user']) && !empty($_POST['text_user'])){
@@ -93,7 +91,6 @@
 		* @param int $pGets id поста для виведення
 		*/
 		public function actionReadmore(array $pGets){
-                    $this->model = new ModelMain();
                     $data = $this->model->getAboutIdInf($pGets[0]);
                     $title	=	"Guestbook - read more";
                     $this->generatedContent = $this->view->generate('ReadmoreView.php', 'layout.php');
@@ -111,7 +108,6 @@
 		* @param int $pGets id поста для редагування
 		*/
 		public function actionEdit(array $pGets){
-                    $this->model = new ModelMain();
                     $data = $this->model->getAboutIdInf($pGets[0]);
 
                     $title	=	"Guestbook - edit";
@@ -129,7 +125,6 @@
 		* 
 		*/
 		public function actionEditwrite(){
-			$this->model = new ModelMain();
 			if(!empty($_POST['id']))			$id = $_POST['id'];
 			if(!empty($_POST['name_user']))		$name = $_POST['name_user'];
 			if(!empty($_POST['text_user']))		$text = $_POST['text_user'];
@@ -157,7 +152,6 @@
 		* @param int $pGets id поста для видалення
 		*/
 		public function actionDelete(array $pGets){
-                    $this->model = new ModelMain();
                     $data = $this->model->deleteData($pGets[0]);
 
                     if($data)

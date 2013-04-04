@@ -10,7 +10,7 @@
 	*/
 	class ModelAuthorization extends Model{
             
-
+                
             /**
             * Конструктор __construct 
             * 

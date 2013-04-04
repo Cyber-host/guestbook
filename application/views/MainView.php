@@ -8,6 +8,7 @@
         <?php }; ?>
     </div>
 	<div class="wrapper_form_inputs">
+            <?php if(isset($_SESSION['authorization'])){ ?>
 		<form action="/guestbook/main/add" method="POST">
 			<div class="wrapper_input_name"><input class="input_name" type="text" name="name_user" value="name..."></div>
 			<div class="wrapper_input_text"><textarea maxlength="500" class="input_text_user" name="text_user">Text...</textarea></div>
@@ -15,6 +16,7 @@
 				<div class="wrapper_input_submit"><input class="input_submit" type="submit" name="submit"></div>
 			</div>
 		</form>
+            <?php }; ?>
 			<div class="wrapper_informs_main"> 
                                 {ALL_POSTS}	
 				<form>

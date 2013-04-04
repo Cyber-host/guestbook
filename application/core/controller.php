@@ -13,7 +13,6 @@
 	    public $view = null;
     
 	    function __construct(){
-		//$this->view = new View();
 	    }
     
 	    public function actionIndex(){
