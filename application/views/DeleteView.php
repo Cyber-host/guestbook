@@ -1,5 +1,5 @@
 <div class="wrapper_main_body">
 	<div class="wrapper_message_action">
-		{DATA}
+		<?php echo $data[0]; ?>
 	</div>
 </div>

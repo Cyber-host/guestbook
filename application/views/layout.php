@@ -5,9 +5,9 @@
 		<script src="/guestbook/js/jquery.js"></script>
 		<script src="/guestbook/js/main.js"></script>
 		<link rel="stylesheet" type="text/css" href="/guestbook/css/style.css" />
-		<title>{TITLE}</title>
+		<title><?php echo $data['title']; ?></title>
 	</head>
 	<body>
-            {CONTENT}
+            <?php echo $data['content']; ?>
 	</body>
 </html>

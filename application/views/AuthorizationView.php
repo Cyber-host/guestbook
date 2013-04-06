@@ -1,4 +1,4 @@
-			{ERROR}
+			<?php if(isset($data[0])) echo $data[0]; ?>
                         <div class="wrapper_informs_main"> 
 				<div class="wrapper_informs">
                                     <form action="/guestbook/authorization/post" method="POST">

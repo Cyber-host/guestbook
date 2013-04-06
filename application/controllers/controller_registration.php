@@ -29,19 +29,12 @@
             * @param array
             */
             public function actionIndex(array $params=null) {
-                
-                
+                $title = "Guestbook - Registration";
                 $tempContent = "";
                 if(isset($params)){
-                    $tempContent = $this->view->getContent('ErrorRegistrationView.php');
-                    $tempContent = $this->view->replace($tempContent, '{DATA}', Errors::getError('registration', (int)$params[1]));
+                    $tempContent =  $this->view->generate('ErrorRegistrationView', array(Errors::getError('registration', (int)$params[1])), false);
                 }
-                    
-                $title = "Guestbook - Registration";
-                $this->generatedContent = $this->view->generate('RegistrationView.php', 'layout.php');
-                $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
-                $this->generatedContent = $this->view->replace($this->generatedContent, '{ERROR}', $tempContent);
-                $this->view->render($this->generatedContent);
+                $this->view->render($this->view->generate('RegistrationView', array($tempContent, 'title' => $title)));
             }
             
             
@@ -76,12 +69,10 @@
                 
                 $result = $this->model->actionAddNewUser($login, md5(md5($paswrd)));
                 if($result){
+
                     $title = "Guestbook - Registration";
                     $data = "Registration is successful!";
-                    $this->generatedContent = $this->view->generate('RegistrationDoneView.php', 'layout.php');
-                    $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
-                    $this->generatedContent = $this->view->replace($this->generatedContent, '{DATA}', $data);
-                    $this->view->render($this->generatedContent);
+                    $this->view->render($this->view->generate('RegistrationDoneView', array($data, 'title'=>$title)));
                     $this->redirect(1, "/guestbook/");
                 }else
                     $this->redirect(0, "/guestbook/registration/index/error/4");

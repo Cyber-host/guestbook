@@ -54,12 +54,12 @@
                             
                             foreach($allElementsRow as $key => $value)
                                 $arrayAllElements[] = array(
-                                    'id'            => array($value['id'], '{ID}'), 
-                                    'name'          => array($value['name'], '{NAME}'), 
-                                    'short_text'    => array($value['short_text'], '{SHORT_TEXT}'), 
-                                    'long_text'     => array((isset($row['longtext']) ? $row['longtext'] : "false"), '{LONG_TEXT}'), 
-                                    'datecreate'    => array($value['datecreate'], '{DATE_CREATE}'), 
-                                    'datechange'    => array($value['datechange'], '{DATE_CHANGE}')
+                                    'id'            => $value['id'], 
+                                    'name'          => $value['name'], 
+                                    'short_text'    => $value['short_text'], 
+                                    'long_text'     => (isset($row['longtext']) ? $row['longtext'] : "false"), 
+                                    'datecreate'    => $value['datecreate'], 
+                                    'datechange'    => $value['datechange']
                                 );
 
                             return $arrayAllElements;
@@ -82,7 +82,7 @@
                         if(!$select) return false;
                         while ($row = mysqli_fetch_assoc($select)) {
 				if($pId == $row['id']){
-                                        $arrayAllElements = array('id' =>array($row['id'], '{ID}'), 'name' => array($row['name'], '{NAME}'), 'long_text' => array($row['long_text'], '{LONG_TEXT}'), 'datecreate' => array($row['datecreate'], '{DATE_CREATE}'), 'datechange' => array($row['datechange'], '{DATE_CHANGE}'));
+                                        $arrayAllElements = array('id' =>$row['id'], 'name' => $row['name'], 'long_text' => $row['long_text'], 'datecreate' => $row['datecreate'], 'datechange' => $row['datechange']);
 					break;
 				}
 			}

@@ -1,14 +1,15 @@
+
 <div class="wrapper_main_body">
     <div>
-        <?php if(!isset($_SESSION['authorization'])){ ?>
+        <?php if(!Session::issets('authorization')){ ?>
         <div><a href="/guestbook/registration">Registration</a></div>
         <div><a href="/guestbook/authorization">Authorization</a></div>
         <?php }else{ ?>
-        <div><a href="/guestbook/authorization/exit">Exit <?php echo $_SESSION['name_user']; ?></a></div>
+        <div><a href="/guestbook/authorization/exit">Exit <?php Session::trace('name_user'); ?></a></div>
         <?php }; ?>
     </div>
 	<div class="wrapper_form_inputs">
-            <?php if(isset($_SESSION['authorization'])){ ?>
+            <?php if(Session::issets('authorization')){ ?>
 		<form action="/guestbook/main/add" method="POST">
 			<div class="wrapper_input_name"><input class="input_name" type="text" name="name_user" value="name..."></div>
 			<div class="wrapper_input_text"><textarea maxlength="500" class="input_text_user" name="text_user">Text...</textarea></div>
@@ -18,7 +19,7 @@
 		</form>
             <?php }; ?>
 			<div class="wrapper_informs_main"> 
-                                {ALL_POSTS}	
+                                <?php echo $data[0]; ?>	
 				<form>
 					<div class="select_page">
 						<select id="pages" name="pages">

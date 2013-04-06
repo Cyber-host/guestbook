@@ -39,14 +39,10 @@
 			$data = $this->model->getAllInf($posts);
 			arsort($data);
 			$title	=	"Guestbook";
-                        
-                        
-                        
-			$this->generatedContent = $this->view->generate('MainView.php', 'layout.php');
-                        $contRepl = $this->view->generateMultiCont("application/views/AllPostView.php", $data);
-                        $this->generatedContent = $this->view->replace($this->generatedContent, '{ALL_POSTS}',$contRepl);
-                        $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
-                        $this->view->render($this->generatedContent);
+
+                        Session::init();
+                        $temp = $this->view->generate('AllPostView', $data, false);
+                        $this->view->render($this->view->generate('MainView', array($temp, 'title'=>$title)));
 		}
                 
                 
@@ -73,10 +69,7 @@
 			}
 			
 			$title	=	"Guestbook - add post";
-                        $this->generatedContent = $this->view->generate('AddView.php', 'layout.php');
-                        $this->generatedContent = $this->view->replace($this->generatedContent, '{DATA}', $data);
-                        $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
-                        $this->view->render($this->generatedContent);
+                        $this->view->render($this->view->generate('AddView', $data));
                         $this->redirect(1, '/guestbook/');
                         
                         
@@ -93,10 +86,8 @@
 		public function actionReadmore(array $pGets){
                     $data = $this->model->getAboutIdInf($pGets[0]);
                     $title	=	"Guestbook - read more";
-                    $this->generatedContent = $this->view->generate('ReadmoreView.php', 'layout.php');
-                    $this->generatedContent = $this->view->generateCont($this->generatedContent, $data);
-                    $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
-                    $this->view->render($this->generatedContent);
+                    
+                    $this->view->render($this->view->generate('ReadmoreView', array($data, 'title'=>$title)));
 		}
                 
                 
@@ -109,13 +100,8 @@
 		*/
 		public function actionEdit(array $pGets){
                     $data = $this->model->getAboutIdInf($pGets[0]);
-
                     $title	=	"Guestbook - edit";
-
-                    $this->generatedContent = $this->view->generate('EditView.php', 'layout.php');
-                    $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
-                    $this->generatedContent = $this->view->generateCont($this->generatedContent, $data);
-                    $this->view->render($this->generatedContent);
+                    $this->view->render($this->view->generate('EditView', array($data, 'title'=>$title)));
                     
 		}
                 
@@ -125,7 +111,7 @@
 		* 
 		*/
 		public function actionEditwrite(){
-			if(!empty($_POST['id']))			$id = $_POST['id'];
+                        if(!empty($_POST['id']))		$id = $_POST['id'];
 			if(!empty($_POST['name_user']))		$name = $_POST['name_user'];
 			if(!empty($_POST['text_user']))		$text = $_POST['text_user'];
 		
@@ -133,16 +119,13 @@
 			$title	=	"Guestbook - edit";
 			
 			if($data)
-				$data = array(array("Update successful!", '{DATA}'));
+				$data = "Update successful!";
 			else
-				$data = array(array("Update is not successful!", '{DATA}'));
-
-			$this->generatedContent = $this->view->generate('EditRewriteView.php', 'layout.php');
-                        $this->generatedContent = $this->view->generateCont($this->generatedContent, $data);
-                        $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
-                        $this->view->render($this->generatedContent);
+				$data = "Update is not successful!";
+                        $this->view->render($this->view->generate('EditRewriteView', array($data, 'title'=>$title)));
                         $this->redirect(1, '/guestbook/');
-		}
+                        
+                }
                 
                 
                 
@@ -155,16 +138,11 @@
                     $data = $this->model->deleteData($pGets[0]);
 
                     if($data)
-                            $data = array(array("Entry is delete from database!", '{DATA}'));
+                            $data = "Entry is delete from database!";
                     else
-                            $data = array(array("Entry is not delete from database!", '{DATA}'));
-
+                            $data = "Entry is not delete from database!";
                     $title	=	"Guestbook - delete";
-                    
-                    $this->generatedContent = $this->view->generate('DeleteView.php', 'layout.php');
-                    $this->generatedContent = $this->view->generateCont($this->generatedContent, $data);
-                    $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
-                    $this->view->render($this->generatedContent);
+                    $this->view->render($this->view->generate('DeleteView', array($data, 'title' => $title)));
                     $this->redirect(1, '/guestbook/');
 		}
                 
@@ -180,7 +158,7 @@
 		* 
 		*/
 		public function action404(){
-			$this->generatedContent = $this->view->generate('404View.php', 'layout.php', null);
+			$this->generatedContent = $this->view->generate('404View', 'layout', null);
                         $title = "404";
                         $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
                         $this->view->render($this->generatedContent);

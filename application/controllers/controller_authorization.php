@@ -10,6 +10,7 @@
 	*/
         class ControllerAuthorization extends Controller{
             
+            
             /**
             * Конструктор __construct iнцiалiзуе обект view
             * 
@@ -26,19 +27,12 @@
             * @param array
             */
             public function actionIndex(array $params=null) {
-                
-                
+                $title = "Guestbook - Authorization";
                 $tempContent = "";
                 if(isset($params)){
-                    $tempContent = $this->view->getContent('ErrorAuthorizationView.php');
-                    $tempContent = $this->view->replace($tempContent, '{DATA}', Errors::getError('authorization', (int)$params[1]));
+                    $tempContent =  $this->view->generate('ErrorAuthorizationView', array(Errors::getError('authorization', (int)$params[1])), false);
                 }
-                    
-                $title = "Guestbook - Registration";
-                $this->generatedContent = $this->view->generate('AuthorizationView.php', 'layout.php');
-                $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
-                $this->generatedContent = $this->view->replace($this->generatedContent, '{ERROR}', $tempContent);
-                $this->view->render($this->generatedContent);
+                $this->view->render($this->view->generate('AuthorizationView', array($tempContent, 'title' => $title)));
             }
             
             
@@ -48,6 +42,8 @@
             * @param array
             */
             public function actionPost(){
+                
+                
                 $login      = trim($_POST['login']);
                 $paswrd     = trim($_POST['paswrd']);
                 
@@ -64,9 +60,11 @@
                 $resultCheckUser = $this->model->checkUser($login, $paswrd);
                 
                 if($resultCheckUser[0]){
-                    $_SESSION['authorization'] = true; 
-                    $_SESSION['id_user'] = $resultCheckUser[1]; 
-                    $_SESSION['name_user'] = $resultCheckUser[2];
+                    
+                    Session::init();
+                    Session::set('authorization', true);
+                    Session::set('id_user', $resultCheckUser[1]);
+                    Session::set('name_user', $resultCheckUser[2]);
                     $this->redirect(0, "/guestbook/");
                 }else 
                     $this->redirect(0, "/guestbook/authorization/index/error/4");                
@@ -80,8 +78,8 @@
             * @param array
             */
             public function actionExit(){
-                $_SESSION = array();
-                session_destroy();
+                Session::init();
+                Session::close();
                 $this->redirect(0, "/guestbook/");
             }
             

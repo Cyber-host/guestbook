@@ -1,1 +1,1 @@
-<div class="error_registration">{DATA}</div>
+<div class="error_registration"><?php echo $data[0]; ?></div>
