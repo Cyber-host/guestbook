@@ -1,3 +1,40 @@
+
+body{
+    background-color: #171717;
+}
+
+A:link {
+    text-decoration: none;
+    color: #ffffff;
+} 
+
+A:visited {
+    text-decoration: none;
+    color: #ffffff;
+} 
+
+A:active {
+    text-decoration: none;
+    color: #aaaaaa;
+}
+A:hover {
+    text-decoration: none; 
+    color: #123321;
+} 
+
+
+.wrapper_head{
+    border: 0px solid;
+    width: 800px; 
+    margin: 0 auto;
+    font-family: Garamond, serif;
+    line-height: 1em;
+    color: #fff9d6;
+    font-weight:bold;
+    font-size: 120px;
+    text-shadow:0px 0px 0 rgb(123,123,123),1px 1px 0 rgb(110,110,110),2px 2px 0 rgb(97,97,97),3px 3px 0 rgb(84,84,84),4px 4px 0 rgb(71,71,71),5px 5px 0 rgb(58,58,58),6px 6px 0 rgb(45,45,45),7px 7px 0 rgb(32,32,32),8px 8px 0 rgb(19,19,19),9px 9px 0 rgb(6,6,6),10px 10px 0 rgb(-7,-7,-7),11px 11px 0 rgb(-20,-20,-20),12px 12px 0 rgb(-33,-33,-33),13px 13px 0 rgb(-46,-46,-46),14px 14px 0 rgb(-59,-59,-59),15px 15px 0 rgb(-72,-72,-72), 16px 16px 0 rgb(-85,-85,-85),17px 17px 16px rgba(0,0,0,0.3),17px 17px 1px rgba(0,0,0,0.5),0px 0px 16px rgba(0,0,0,.2);
+}
+
 .wrapper_main_body{
 	border: 0px solid;
 	overflow: hidden;
@@ -17,6 +54,7 @@
 	float: left;
 	width: 160px;
 	margin-bottom: 10px;
+        
 }
 
 .wrapper_input_text{
@@ -38,6 +76,7 @@
 	position: reletive;
 	float: left;
 	border: 0px solid;
+        
 }
 
 
@@ -55,18 +94,24 @@
 	position: reletive;
 	margin: 0 auto;
 	width: 500px;
+        color: green;
 }
 
 
 .head_message{
 	border: 1px solid;
 	width: 100%;
+        padding: 5px 5px 5px 5px;
+        border-bottom: none;
 
 }
 
 .text_message{
-	border: 1px solid;
-	width: 100%;
+    min-height: 100px;
+    border: 1px solid;
+    width: 100%;
+    padding: 5px 5px 5px 5px;
+    border-bottom: none;
 }
 
 .foot_message{
@@ -74,6 +119,7 @@
 	width: 100%;
 	margin-bottom: 20px;
 	overflow: hidden;
+        padding: 5px 5px 5px 5px;
 }
 
 
@@ -82,6 +128,7 @@
 	margin-right: 10px;
 	position: relative;
 	float: left;
+        color: green;
 }
 
 
@@ -92,6 +139,7 @@
 	margin: 0 auto;
 	width: 500px;
 	text-align: center;
+        color: green;
 }
 
 
@@ -107,6 +155,9 @@
 
 .input_name{
 	width: 100%;
+        border: 2px solid #fff;
+        background-color: #ababab;
+        color: #503f23;
 }
 
 .input_text_user{
@@ -114,6 +165,8 @@
 	max-width: 560px;
 	height: 100px;
 	max-height: 120px;
+        border: 2px solid #fff;
+        background-color: #ababab;
 }
 
 .input_submit{
@@ -130,5 +183,4 @@
     width: 300px;
     margin: 0 auto;
 }
-
 

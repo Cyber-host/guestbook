@@ -8,6 +8,7 @@
 		<title><?php echo $data['title']; ?></title>
 	</head>
 	<body>
+            <div class="wrapper_head">GUESTBOOK</div>
             <?php echo $data['content']; ?>
 	</body>
 </html>

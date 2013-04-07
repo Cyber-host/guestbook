@@ -9,7 +9,7 @@
 			</div>
 		</form>
 		<div class="foot_message" style="border: 0;">
-			<div class="foot_message_menu">date last edit: <?php echo $data[0]['datechange']; ?></div>
+			<div class="foot_message_menu"><b>date last edit: </b><?php echo $data[0]['datechange']; ?></div>
 			<div class="foot_message_menu"><a href="/guestbook/">Home</a></div>
 		</di>
 	</div>
