@@ -63,13 +63,14 @@
 				unset($_POST['name_user']);
 				unset($_POST['text_user']);
 				
-				if($this->model->addInf($namePost, $textUser, $textShortUser, 'NOW()')) $data = "Entry is added to the database!"; else $data = "Entry is not added to the database!";
+                                Session::init();
+				if($this->model->addInf(Session::get('id_user'),$namePost, $textUser, $textShortUser, 'NOW()')) $data = "Entry is added to the database!"; else $data = "Entry is not added to the database!";
 			}else{
 				$data = "Entry is not added to the database!";
 			}
 			
 			$title	=	"Guestbook - add post";
-                        $this->view->render($this->view->generate('AddView', $data));
+                        $this->view->render($this->view->generate('AddView', array('content' =>$data, 'title'=>$title)));
                         $this->redirect(1, '/guestbook/');
                         
                         
@@ -87,7 +88,7 @@
                     $data = $this->model->getAboutIdInf($pGets[0]);
                     $title	=	"Guestbook - read more";
                     
-                    $this->view->render($this->view->generate('ReadmoreView', array($data, 'title'=>$title)));
+                    $this->view->render($this->view->generate('ReadmoreView', array('data' => $data, 'title'=>$title)));
 		}
                 
                 
@@ -99,6 +100,10 @@
 		* @param int $pGets id поста для редагування
 		*/
 		public function actionEdit(array $pGets){
+                    Session::init();
+                    if(!Session::issets('authorization') || Session::get('id_user') != $this->model->getOneElement($pGets[0], 'id_user'))
+                        $this->redirect (0, '/guestbook');
+                    
                     $data = $this->model->getAboutIdInf($pGets[0]);
                     $title	=	"Guestbook - edit";
                     $this->view->render($this->view->generate('EditView', array($data, 'title'=>$title)));
@@ -135,6 +140,12 @@
 		* @param int $pGets id поста для видалення
 		*/
 		public function actionDelete(array $pGets){
+                    
+                    Session::init();
+                    if(!Session::issets('authorization') || Session::get('id_user') != $this->model->getOneElement($pGets[0], 'id_user'))
+                        $this->redirect (0, '/guestbook');
+                    
+                    
                     $data = $this->model->deleteData($pGets[0]);
 
                     if($data)
@@ -158,10 +169,8 @@
 		* 
 		*/
 		public function action404(){
-			$this->generatedContent = $this->view->generate('404View', 'layout', null);
                         $title = "404";
-                        $this->generatedContent = $this->view->replace($this->generatedContent, '{TITLE}', $title);
-                        $this->view->render($this->generatedContent);
+                        $this->view->render($this->view->generate('404View', array($data, 'title' => $title)));
 		}
                 
                 

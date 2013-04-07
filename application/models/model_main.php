@@ -48,13 +48,14 @@
 			$arrayAllElements = array();
 			
                         if(gettype($start) == "integer" && gettype($numbers) == "integer" && gettype($flagNumber) == "boolean" && gettype($flagLongText) == "boolean"){
-                            $select = $this->_query("SELECT id, name, short_text, ".($flagLongText ? "long_text," : "")." datecreate, datechange FROM $this->table1 ORDER BY id DESC ".($flagNumber ? "LIMIT $start, $numbers" : ""));
+                            $select = $this->_query("SELECT id, id_user, name, short_text, ".($flagLongText ? "long_text," : "")." datecreate, datechange FROM $this->table1 ORDER BY id DESC ".($flagNumber ? "LIMIT $start, $numbers" : ""));
                             
                             $allElementsRow = $this->getElements($select);
                             
                             foreach($allElementsRow as $key => $value)
                                 $arrayAllElements[] = array(
                                     'id'            => $value['id'], 
+                                    'id_user'       => $value['id_user'],
                                     'name'          => $value['name'], 
                                     'short_text'    => $value['short_text'], 
                                     'long_text'     => (isset($row['longtext']) ? $row['longtext'] : "false"), 
@@ -68,8 +69,8 @@
                         }
 		}
                 
-                
-/**
+
+                /**
 		* Метод getAboutIdInf вибiр данних з бази
 		* 
 		* @param int $pId iндекс елемента для вибору 
@@ -78,15 +79,39 @@
 		public function getAboutIdInf($pId){
 			$arrayAllElements = array();
 			
-			$select = $this->_query("SELECT id, name,  long_text, datecreate, datechange FROM $this->table1");
+			$select = $this->_query("SELECT id, id_user, name,  long_text, datecreate, datechange FROM $this->table1");
                         if(!$select) return false;
                         while ($row = mysqli_fetch_assoc($select)) {
 				if($pId == $row['id']){
-                                        $arrayAllElements = array('id' =>$row['id'], 'name' => $row['name'], 'long_text' => $row['long_text'], 'datecreate' => $row['datecreate'], 'datechange' => $row['datechange']);
+                                        $arrayAllElements = array('id' =>$row['id'], 'id_user' => $row['id_user'], 'name' => $row['name'], 'long_text' => $row['long_text'], 'datecreate' => $row['datecreate'], 'datechange' => $row['datechange']);
 					break;
 				}
 			}
 			return $arrayAllElements;
+		}
+                
+                
+                
+                
+                
+                /**
+		* Метод getOneElement вибiр данних з бази
+		* 
+		* @param int $pId iндекс елемента для вибору 
+		* @return array/boolean
+		*/
+		public function getOneElement($pId, $element){
+			$returnData = null;
+			
+			$select = $this->_query("SELECT id, $element FROM $this->table1");
+                        if(!$select) return false;
+                        while ($row = mysqli_fetch_assoc($select)) {
+				if($pId == $row['id']){
+                                        $returnData = $row[$element];
+					break;
+				}
+			}
+			return $returnData;
 		}
 		
 		
@@ -118,8 +143,8 @@
 		* @param date $pDate_create дата поста
 		* @return boolean
 		*/
-		public function addInf($pName, $pShort_text, $pLong_text, $pDate_create){
-			return (bool)$this->_query("INSERT INTO $this->table1 (name, short_text, long_text, datecreate) VALUES ('$pName', '$pShort_text', '$pLong_text', $pDate_create)");
+		public function addInf($pIdUser, $pName, $pShort_text, $pLong_text, $pDate_create){
+			return (bool)$this->_query("INSERT INTO $this->table1 (id_user, name, short_text, long_text, datecreate) VALUES ($pIdUser, '$pName', '$pShort_text', '$pLong_text', $pDate_create)");
 
 		}
 		
